@@ -16,7 +16,8 @@ export default function Board() {
   const [xIsNext, setXIsNext] = useState(true);
 
   function handleClick(i) {
-    if (squares[i]) { // If square is marked, ends the function early so the square is not marked again.
+    // If square is marked or a winner is declared, the square cannot be marked.
+    if (squares[i] || declareWinner(squares)) {
       return;
     }
 
@@ -51,4 +52,28 @@ export default function Board() {
       </div>
     </>
   );
+}
+
+function declareWinner(squares) {
+  // Winner combinations
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ];
+
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+
+  // If no winner is declared
+  return null;
 }
