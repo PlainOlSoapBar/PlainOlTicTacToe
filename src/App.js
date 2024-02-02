@@ -16,6 +16,10 @@ export default function Board() {
   const [xIsNext, setXIsNext] = useState(true);
 
   function handleClick(i) {
+    if (squares[i]) { // If square is marked, ends the function early so the square is not marked again.
+      return;
+    }
+
     const nextSquares = squares.slice();
 
     if (xIsNext) {
